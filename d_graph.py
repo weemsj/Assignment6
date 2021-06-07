@@ -64,7 +64,7 @@ class DirectedGraph:
         """
         if src > self.v_count-1 or dst > self.v_count-1:
             return
-        if self.adj_matrix[src] and self.adj_matrix[src][dst] and weight > 0 and src != dst:
+        if self.adj_matrix[src] and self.adj_matrix[dst] and weight > 0 and src != dst:
             self.adj_matrix[src][dst] = weight
 
     def remove_edge(self, src: int, dst: int) -> None:
@@ -96,6 +96,7 @@ class DirectedGraph:
                 if self.adj_matrix[x][y] > 0:
                     eds.append((x, y, self.adj_matrix[x][y]))
         return eds
+
     def is_valid_path(self, path: []) -> bool:
         """
         TODO: Write this implementation
@@ -113,7 +114,6 @@ class DirectedGraph:
             else:
                 return False
         return True
-
 
     def dfs(self, v_start, v_end=None) -> []:
         """
