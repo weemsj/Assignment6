@@ -73,7 +73,7 @@ class DirectedGraph:
         """
         if src >= self.v_count or dst >= self.v_count:
             return
-        if self.adj_matrix[src] and self.adj_matrix[src][dst]:
+        if self.adj_matrix[src] and self.adj_matrix[dst]:
             self.adj_matrix[src][dst] = 0
 
     def get_vertices(self) -> []:
