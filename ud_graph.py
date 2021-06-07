@@ -3,6 +3,7 @@
 # Assignment: Assignment 6
 # Description: Undirected graphs
 
+from collections import deque
 
 class UndirectedGraph:
     """
@@ -51,12 +52,13 @@ class UndirectedGraph:
         """
         Add edge to the graph
         """
+        if u == v:
+            return
         if u not in self.adj_list:
             self.add_vertex(u)
         if v not in self.adj_list:
             self.add_vertex(v)
-        if u == v:
-            return
+
         ed = self.adj_list[u]
         for val in ed:
             if val == v:
@@ -133,49 +135,77 @@ class UndirectedGraph:
             ind += 1
         return True
 
-    def dfs(self, v_start, v_end=None) -> []:
+    def dfs(self, v_start, v_end=None, visited=None) -> []:
         """
         Return list of vertices visited during DFS search
         Vertices are picked in alphabetical order
         """
-        visited = []
-        dfs = []
-        successors = []
-        dfs.append(v_start)
-        while dfs and v_end not in visited:
-            dfs.sort()
-            v = dfs.pop(0)
-            if v not in visited:
-                visited.append(v)
-                adj = self.adj_list[v]
-                successors.copy()
-                for idx in successors:
-                    dfs.append(idx)
+        if visited is None:
+            visited = []
+        visited.append(v_start)
+
+        adj = self.adj_list[v_start]
+        adj.sort()
+        for nxt in adj:
+            if nxt not in visited and v_end not in visited:
+                self.dfs(nxt, v_end, visited)
         return visited
-
-
-
 
     def bfs(self, v_start, v_end=None) -> []:
         """
         Return list of vertices visited during BFS search
         Vertices are picked in alphabetical order
         """
-        
+
+        visited = []
+        queue = [v_start]
+        while queue and v_end not in visited:
+            v = queue.pop(0)
+            if v not in visited:
+                visited.append(v)
+                adj = self.adj_list[v]
+                adj.sort()
+                for x in adj:
+                    if x not in visited:
+                        queue.append(x)
+        return visited
 
     def count_connected_components(self):
         """
         Return number of connected componets in the graph
         """
-      
+        count = 0
+        visited = []
+        for vet in self.adj_list:
+            if vet not in visited:
+                visited += self.dfs(vet)
+                count += 1
+        return count
 
     def has_cycle(self):
         """
         Return True if graph contains a cycle, False otherwise
         """
-       
+        keys = self.adj_list.keys()
+        for val in keys:
+            if self.adj_list[val]:
+                return self.rec_has_cycle(val)
 
-   
+    def rec_has_cycle(self, v_start, parent=None,visited=None):
+
+        if visited is None:
+            visited = []
+        visited.append(v_start)
+
+        adj = self.adj_list[v_start]
+        adj.sort()
+        for nxt in adj:
+            if nxt not in visited:
+                if self.rec_has_cycle(nxt, v_start, visited):
+                    return True
+            elif nxt != parent:
+                return True
+        return False
 
 
 if __name__ == '__main__':
