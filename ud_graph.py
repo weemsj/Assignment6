@@ -70,11 +70,12 @@ class UndirectedGraph:
         """
         Remove edge from the graph
         """
-        ed = self.adj_list[u]
-        for val in ed:
-            if val == v:
-                self.adj_list[u].remove(v)
-                self.adj_list[v].remove(u)
+        if self.adj_list is not None:
+            ed = self.adj_list[v]
+            for val in ed:
+                if val == u:
+                    self.adj_list[v].remove(u)
+                    self.adj_list[u].remove(v)
 
     def remove_vertex(self, v: str) -> None:
         """
@@ -226,7 +227,6 @@ if __name__ == '__main__':
         g.add_edge(u, v)
     print(g)
 
-
     print("\nPDF - method remove_edge() / remove_vertex example 1")
     print("----------------------------------------------------")
     g = UndirectedGraph(['AB', 'AC', 'BC', 'BD', 'CD', 'CE', 'DE'])
@@ -237,7 +237,6 @@ if __name__ == '__main__':
     g.remove_vertex('D')
     print(g)
 
-
     print("\nPDF - method get_vertices() / get_edges() example 1")
     print("---------------------------------------------------")
     g = UndirectedGraph()
@@ -245,14 +244,12 @@ if __name__ == '__main__':
     g = UndirectedGraph(['AB', 'AC', 'BC', 'BD', 'CD', 'CE'])
     print(g.get_edges(), g.get_vertices(), sep='\n')
 
-
     print("\nPDF - method is_valid_path() example 1")
     print("--------------------------------------")
     g = UndirectedGraph(['AB', 'AC', 'BC', 'BD', 'CD', 'CE', 'DE'])
     test_cases = ['ABC', 'ADE', 'ECABDCBE', 'ACDECB', '', 'D', 'Z']
     for path in test_cases:
         print(list(path), g.is_valid_path(list(path)))
-
 
     print("\nPDF - method dfs() and bfs() example 1")
     print("--------------------------------------")
@@ -265,7 +262,6 @@ if __name__ == '__main__':
     for i in range(1, len(test_cases)):
         v1, v2 = test_cases[i], test_cases[-1 - i]
         print(f'{v1}-{v2} DFS:{g.dfs(v1, v2)} BFS:{g.bfs(v1, v2)}')
-
 
     print("\nPDF - method count_connected_components() example 1")
     print("---------------------------------------------------")
@@ -282,7 +278,6 @@ if __name__ == '__main__':
         g.add_edge(u, v) if command == 'add' else g.remove_edge(u, v)
         print(g.count_connected_components(), end=' ')
     print()
-
 
     print("\nPDF - method has_cycle() example 1")
     print("----------------------------------")
