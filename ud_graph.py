@@ -196,10 +196,12 @@ class UndirectedGraph:
         """
         Return True if graph contains a cycle, False otherwise
         """
+
         keys = self.adj_list.keys()
         for val in keys:
-            if self.adj_list[val]:
+            if len(self.adj_list[val]) > 1:
                 return self.rec_has_cycle(val)
+        return False
 
     def rec_has_cycle(self, v_start, parent=None,visited=None):
 
@@ -303,3 +305,7 @@ if __name__ == '__main__':
         u, v = edge
         g.add_edge(u, v) if command == 'add' else g.remove_edge(u, v)
         print('{:<10}'.format(case), g.has_cycle())
+
+    edges = ['FD', 'EK', 'EB', 'EJ', 'KB', 'JC', 'JG', 'CG', 'GB']
+    g = UndirectedGraph(edges)
+    print(g.has_cycle())
