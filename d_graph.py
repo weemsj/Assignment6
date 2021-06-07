@@ -62,18 +62,18 @@ class DirectedGraph:
         """
         This method adds a new edge to the graph.
         """
-        if src > self.v_count-1 or dst > self.v_count-1:
+        if 0 > src > self.v_count-1 or 0 > dst > self.v_count-1:
             return
         if self.adj_matrix[src] and self.adj_matrix[dst] and weight > 0 and src != dst:
             self.adj_matrix[src][dst] = weight
 
     def remove_edge(self, src: int, dst: int) -> None:
         """
-        This method removes an edge between two verticies
+        This method removes an edge between two vertices
         """
-        if src > self.v_count - 1 or dst > self.v_count - 1:
+        if 0 > src > self.v_count - 1 or 0> dst > self.v_count - 1:
             return
-        if self.adj_matrix[src] and self.adj_matrix[dst]:
+        if self.adj_matrix[src] and self.adj_matrix[src][dst] > 0:
             self.adj_matrix[src][dst] = 0
 
     def get_vertices(self) -> []:
