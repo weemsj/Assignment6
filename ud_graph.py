@@ -70,12 +70,12 @@ class UndirectedGraph:
         """
         Remove edge from the graph
         """
-        if self.adj_list is not None:
-            ed = self.adj_list[v]
-            for val in ed:
-                if val == u:
-                    self.adj_list[v].remove(u)
-                    self.adj_list[u].remove(v)
+
+        ed = self.adj_list[v]
+        for val in ed:
+            if val == u:
+                self.adj_list[v].remove(u)
+                self.adj_list[u].remove(v)
 
     def remove_vertex(self, v: str) -> None:
         """
