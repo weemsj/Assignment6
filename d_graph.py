@@ -52,39 +52,64 @@ class DirectedGraph:
 
     def add_vertex(self) -> int:
         """
-        TODO: Write this implementation
+        This method adds a new vertex to the graph.
         """
-        pass
+        self.v_count += 1
+        self.adj_matrix = [[0 for x in range(self.v_count)]for y in range(self.v_count)]
+        return self.v_count
 
     def add_edge(self, src: int, dst: int, weight=1) -> None:
         """
-        TODO: Write this implementation
+        This method adds a new edge to the graph.
         """
-        pass
+        if self.adj_matrix[src] and self.adj_matrix[dst] and weight > 0:
+            self.adj_matrix[src][dst] = weight
 
     def remove_edge(self, src: int, dst: int) -> None:
         """
-        TODO: Write this implementation
+        This method removes an edge between two verticies
         """
-        pass
+        if self.adj_matrix[src] and self.adj_matrix[src][dst]:
+            self.adj_matrix[src][dst] = 0
 
     def get_vertices(self) -> []:
         """
-        TODO: Write this implementation
+        This method returns a list of vertices of the graph
         """
-        pass
+        verts =[]
+
+        for i in range(self.v_count):
+            verts.append(i)
+        return verts
 
     def get_edges(self) -> []:
         """
-        TODO: Write this implementation
+        This method returns a list of edges in the graph
         """
-        pass
-
+        eds = []
+        for x in range(self.v_count):
+            for y in range(self.v_count):
+                if self.adj_matrix[x][y] > 0:
+                    eds.append((x, y, self.adj_matrix[x][y]))
+        return eds
     def is_valid_path(self, path: []) -> bool:
         """
         TODO: Write this implementation
         """
-        pass
+        eds = []
+        k = 0
+        for x in range(self.v_count):
+            for y in range(self.v_count):
+                if self.adj_matrix[x][y] > 0:
+                    eds.append((x, y))
+
+        while k+1 < len(path):
+            if (path[k], path[k+1]) in eds:
+                k += 1
+            else:
+                return False
+        return True
+
 
     def dfs(self, v_start, v_end=None) -> []:
         """
