@@ -117,23 +117,70 @@ class DirectedGraph:
                 return False
         return True
 
-    def dfs(self, v_start, v_end=None) -> []:
+    def dfs(self, v_start, v_end=None, visited=None) -> []:
         """
-        TODO: Write this implementation
+        Return list of vertices visited during DFS search
+        Vertices are picked in ascending order
         """
-        pass
+        if v_end is not None:
+            if not self.adj_matrix[v_start][v_end]:
+                v_end = None
+
+        if visited is None:
+            visited = []
+
+        if v_start < 0 or v_start > self.v_count -1:
+            return visited
+        visited.append(v_start)
+
+        adj = self.adj_matrix[v_start]
+        for x in range(self.v_count):
+            if adj[x] > 0 and x not in visited and v_end not in visited:
+                self.dfs(x, v_end, visited)
+        return visited
 
     def bfs(self, v_start, v_end=None) -> []:
         """
-        TODO: Write this implementation
+        Return list of vertices visited during BFS search
+        Vertices are picked in ascending order
         """
-        pass
+        visited = []
+        queue = [v_start]
+        if v_start < 0 or v_start > self.v_count - 1:
+            return visited
+        while queue and v_end not in visited:
+            v = queue.pop(0)
+            if v not in visited:
+                visited.append(v)
+                adj = self.adj_matrix[v]
+                for x in range(self.v_count):
+                    if adj[x] > 0 and x not in visited and v_end not in visited:
+                        queue.append(x)
+        return visited
 
     def has_cycle(self):
+        v_start = 0
+
+        if self.rec_has_cycle(v_start):
+            return True
+        return False
+
+    def rec_has_cycle(self, v_start, parent=None, visited=None):
         """
         TODO: Write this implementation
         """
-        pass
+        if visited is None:
+            visited = []
+        visited.append(v_start)
+
+        adj = self.adj_matrix[v_start]
+
+        for x in range(self.v_count):
+            if adj[x] > 0 and x not in visited:
+                if self.rec_has_cycle(x, v_start, visited):
+                    return True
+            return True
+        return False
 
     def dijkstra(self, src: int) -> []:
         """
