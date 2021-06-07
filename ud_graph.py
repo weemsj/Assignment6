@@ -70,10 +70,11 @@ class UndirectedGraph:
         """
         Remove edge from the graph
         """
-
-        ed = self.adj_list[v]
+        if u not in self.adj_list or v not in self.adj_list:
+            return
+        ed = self.adj_list[u]
         for val in ed:
-            if val == u:
+            if val == v:
                 self.adj_list[v].remove(u)
                 self.adj_list[u].remove(v)
 
