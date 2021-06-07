@@ -200,7 +200,8 @@ class UndirectedGraph:
         keys = self.adj_list.keys()
         for val in keys:
             if len(self.adj_list[val]) > 1:
-                return self.rec_has_cycle(val)
+                if self.rec_has_cycle(val):
+                    return True
         return False
 
     def rec_has_cycle(self, v_start, parent=None,visited=None):
