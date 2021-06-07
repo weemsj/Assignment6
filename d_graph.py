@@ -62,7 +62,7 @@ class DirectedGraph:
         """
         This method adds a new edge to the graph.
         """
-        if 0 > src > self.v_count-1 or 0 > dst > self.v_count-1:
+        if src > self.v_count-1 or dst > self.v_count-1:
             return
         if self.adj_matrix[src] and self.adj_matrix[dst] and weight > 0 and src != dst:
             self.adj_matrix[src][dst] = weight
@@ -71,7 +71,7 @@ class DirectedGraph:
         """
         This method removes an edge between two vertices
         """
-        if 0 > src > self.v_count - 1 or 0> dst > self.v_count - 1:
+        if src > self.v_count - 1 or dst > self.v_count - 1:
             return
         if self.adj_matrix[src] and self.adj_matrix[src][dst] > 0:
             self.adj_matrix[src][dst] = 0
