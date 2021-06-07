@@ -147,6 +147,9 @@ class UndirectedGraph:
 
         if visited is None:
             visited = []
+
+        if v_start not in self.adj_list:
+            return visited
         visited.append(v_start)
 
         adj = self.adj_list[v_start]
@@ -164,6 +167,8 @@ class UndirectedGraph:
 
         visited = []
         queue = [v_start]
+        if v_start not in self.adj_list:
+            return visited
         while queue and v_end not in visited:
             v = queue.pop(0)
             if v not in visited:
