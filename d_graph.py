@@ -71,7 +71,7 @@ class DirectedGraph:
         """
         This method removes an edge between two vertices
         """
-        if src < 0 and dst < 0:
+        if src < 0 or dst < 0:
             return
         if src > self.v_count - 1 or dst > self.v_count - 1:
             return
