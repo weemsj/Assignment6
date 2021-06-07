@@ -142,6 +142,9 @@ class UndirectedGraph:
         Return list of vertices visited during DFS search
         Vertices are picked in alphabetical order
         """
+        if v_end not in self.adj_list:
+            v_end = None
+
         if visited is None:
             visited = []
         visited.append(v_start)
