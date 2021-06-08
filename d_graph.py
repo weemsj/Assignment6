@@ -159,27 +159,32 @@ class DirectedGraph:
         return visited
 
     def has_cycle(self):
-        v_start = 0
-
-        if self.rec_has_cycle(v_start):
-            return True
+        """
+        Return True if graph contains a cycle, False otherwise
+        """
+        visited = []
+        stack = []
+        for x in range(self.v_count):
+            if x not in visited:
+                if self.rec_has_cycle(x, visited, stack):
+                    return True
         return False
 
-    def rec_has_cycle(self, v_start, parent=None, visited=None):
+    def rec_has_cycle(self, v_start, visited, stack):
         """
-        TODO: Write this implementation
+        helper recursive function for has cycle
         """
-        if visited is None:
-            visited = []
         visited.append(v_start)
-
+        stack.append(v_start)
         adj = self.adj_matrix[v_start]
 
-        for x in range(self.v_count):
+        for x in range(len(adj)):
             if adj[x] > 0 and x not in visited:
-                if self.rec_has_cycle(x, v_start, visited):
+                if self.rec_has_cycle(x, visited, stack):
                     return True
-            return True
+            elif adj[x] > 0 and x in stack:
+                return True
+        stack.remove(v_start)
         return False
 
     def dijkstra(self, src: int) -> []:
