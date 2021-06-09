@@ -3,6 +3,8 @@
 # Assignment:
 # Description:
 
+import heapq
+
 class DirectedGraph:
     """
     Class to implement directed weighted graph
@@ -189,10 +191,34 @@ class DirectedGraph:
 
     def dijkstra(self, src: int) -> []:
         """
-        TODO: Write this implementation
+        This method implements Dijkstras algorithm to compute the shortest path rom a given vertex to all other vertices
+        in the graph.
         """
-        pass
+        vertices = [x for x in range(self.v_count)]
+        distance = dict(zip(vertices, [float('inf')] * len(vertices)))
+        visited = set()
+        priority = [(src, 0)]
+        while priority:
+            v, d = heapq.heappop(priority)
+            if v in visited:
+                continue
+            visited.add((v, d))
+            successors = self.adj_matrix[v]
+            for neighbor in range(len(successors)):
+                if neighbor == src:
+                    distance[neighbor] = 0
+                if neighbor in visited or successors[neighbor] == 0:
+                    continue
+                di = successors[neighbor]
+                di += d
+                if di < distance.get(neighbor, float('inf')):
+                    heapq.heappush(priority, (neighbor, di))
+                    distance[neighbor] = di
+        verts = []
 
+        for vert in sorted(distance):
+            verts.append(distance[vert])
+        return verts
 
 if __name__ == '__main__':
 
